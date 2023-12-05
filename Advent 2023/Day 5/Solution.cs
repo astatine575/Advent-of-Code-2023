@@ -56,8 +56,11 @@ namespace Advent_2023.Day_5
                 LastNodeEnd = DataNode.Source + DataNode.Length;
             }
 
-            AlmanacNode EndNode = new AlmanacNode(LastNodeEnd, LastNodeEnd, long.MaxValue - LastNodeEnd);
-            Map.Add(EndNode);
+            if (LastNodeEnd < long.MaxValue)
+            {
+                AlmanacNode EndNode = new AlmanacNode(LastNodeEnd, LastNodeEnd, long.MaxValue - LastNodeEnd);
+                Map.Add(EndNode);
+            }
         }
 
         static long LookupInMap(long Source, List<AlmanacNode> Map, ref long MinDistanceToNodeBoundary)
@@ -169,6 +172,7 @@ namespace Advent_2023.Day_5
             // Now find the smallest seed
             long SmallestSeed = long.MaxValue;
             long SmallestSeedLocation = long.MaxValue;
+            long SkippedSeedCalculations = 0;
             foreach (Tuple<long,long> SeedRange in InitialSeeds)
             {
                 long SeedRangeStart = SeedRange.Item2;
@@ -187,6 +191,7 @@ namespace Advent_2023.Day_5
                     // We can skip ahead by MinDistanceToNextBoundary to shortcut things
                     if (MinDistanceToNextBoundary > 0)
                     {
+                        SkippedSeedCalculations += MinDistanceToNextBoundary;
                         Seed -= MinDistanceToNextBoundary - 1;
                         continue;
                     }
@@ -201,7 +206,7 @@ namespace Advent_2023.Day_5
 
             sw.Stop();
 
-            Console.WriteLine($"Smallest location was {SmallestSeedLocation}. Data processing took {sw.ElapsedMilliseconds} milliseconds.");
+            Console.WriteLine($"Smallest location was {SmallestSeedLocation}. Data processing took {sw.ElapsedMilliseconds} milliseconds. Skipped {SkippedSeedCalculations} seed mappings.");
         }
     }
 }
