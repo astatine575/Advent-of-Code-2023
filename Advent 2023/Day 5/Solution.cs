@@ -173,12 +173,14 @@ namespace Advent_2023.Day_5
             long SmallestSeed = long.MaxValue;
             long SmallestSeedLocation = long.MaxValue;
             long SkippedSeedCalculations = 0;
+            long TotalSeedCalculations = 0;
             foreach (Tuple<long,long> SeedRange in InitialSeeds)
             {
                 long SeedRangeStart = SeedRange.Item2;
                 long SeedRangeEnd = SeedRange.Item1;
                 for (long Seed = SeedRangeStart; Seed > SeedRangeEnd; Seed--)
                 {
+                    TotalSeedCalculations++;
                     long MinDistanceToNextBoundary = Seed - SeedRangeEnd;
                     long SeedSoil = LookupInMap(Seed, SeedToSoil, ref MinDistanceToNextBoundary);
                     long SeedFertilizer = LookupInMap(SeedSoil, SoilToFertilizer, ref MinDistanceToNextBoundary);
@@ -206,7 +208,7 @@ namespace Advent_2023.Day_5
 
             sw.Stop();
 
-            Console.WriteLine($"Smallest location was {SmallestSeedLocation}. Data processing took {sw.ElapsedMilliseconds} milliseconds. Skipped {SkippedSeedCalculations} seed mappings.");
+            Console.WriteLine($"Smallest location was {SmallestSeedLocation}. Data processing took {sw.ElapsedMilliseconds} milliseconds. Computed in {TotalSeedCalculations} seed mappings ({SkippedSeedCalculations} skipped).");
         }
     }
 }
