@@ -193,7 +193,7 @@ namespace Advent_2023.Day_5
                     // We can skip ahead by MinDistanceToNextBoundary to shortcut things
                     if (MinDistanceToNextBoundary > 0)
                     {
-                        SkippedSeedCalculations += MinDistanceToNextBoundary;
+                        SkippedSeedCalculations += MinDistanceToNextBoundary - 1;
                         Seed -= MinDistanceToNextBoundary - 1;
                         continue;
                     }
